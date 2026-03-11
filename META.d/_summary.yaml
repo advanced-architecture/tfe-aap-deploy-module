@@ -1,8 +1,21 @@
 ---
 schema: 1.1
 
-partition: security
-category: cloudsec
+partition: automation
+category: infrastructure
 
 summary:
-  owner: team-cloudsec
+  owner: team-advanced-architecture
+  description: >
+    Terraform module that deploys a highly available Red Hat Ansible Automation
+    Platform (AAP) 2.4 environment on AWS, including Automation Controller and
+    Automation Hub nodes across multiple Availability Zones, an external
+    Multi-AZ PostgreSQL RDS instance, and Application Load Balancers with
+    TLS termination. Follows Red Hat's enterprise reference architecture for
+    AAP production deployments.
+  components:
+    - automation-controller
+    - automation-hub
+    - rds-postgresql
+    - application-load-balancer
+  aap_version: "2.4"
