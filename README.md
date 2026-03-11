@@ -93,7 +93,7 @@ This module provisions the AWS infrastructure required to run a **production-gra
 
 ### Terraform / HCP Terraform
 
-- Terraform CLI **~> 1.7** or HCP Terraform workspace.
+- Terraform CLI **~> 1.9** or HCP Terraform workspace.
 - AWS provider **~> 5.0**.
 - Credentials with permissions to manage EC2, RDS, ALB, Security Groups, and IAM instance profiles.
 
@@ -103,8 +103,9 @@ This module provisions the AWS infrastructure required to run a **production-gra
 
 | Dependency | Version | Notes |
 |------------|---------|-------|
-| Terraform | ~> 1.7 | Required |
+| Terraform | ~> 1.9 | Required |
 | AWS Provider (`hashicorp/aws`) | ~> 5.0 | Required |
+| Random Provider (`hashicorp/random`) | ~> 3.0 | Required |
 | RHEL 8.6+ or RHEL 9.x AMI | — | Must be pre-subscribed or use Cloud Access |
 | PostgreSQL | 13 or 14 | Provisioned as AWS RDS Multi-AZ |
 | AAP Installer | 2.4.x | Run post-Terraform on the nodes |

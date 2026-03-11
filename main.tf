@@ -1,10 +1,14 @@
 terraform {
-  required_version = "~> 1.7"
+  required_version = "~> 1.9"
 
   required_providers {
     aws = {
       source  = "hashicorp/aws"
       version = "~> 5.0"
+    }
+    random = {
+      source  = "hashicorp/random"
+      version = "~> 3.0"
     }
   }
 }
@@ -209,6 +213,14 @@ resource "aws_security_group" "db" {
 }
 
 # ---------------------------------------------------------------------------
+# Random suffix for resources that require globally or account-unique names
+# ---------------------------------------------------------------------------
+
+resource "random_id" "db_snapshot_suffix" {
+  byte_length = 4
+}
+
+# ---------------------------------------------------------------------------
 # RDS - External PostgreSQL (Multi-AZ)
 # ---------------------------------------------------------------------------
 
@@ -241,7 +253,7 @@ resource "aws_db_instance" "aap" {
   backup_retention_period = var.db_backup_retention_days
   deletion_protection     = var.db_deletion_protection
   skip_final_snapshot     = false
-  final_snapshot_identifier = "${var.name_prefix}-postgresql-final-snapshot"
+  final_snapshot_identifier = "${var.name_prefix}-postgresql-final-${random_id.db_snapshot_suffix.hex}"
 
   enabled_cloudwatch_logs_exports = ["postgresql", "upgrade"]
 
@@ -377,7 +389,7 @@ resource "aws_lb_listener" "controller_https" {
   load_balancer_arn = aws_lb.controller.arn
   port              = 443
   protocol          = "HTTPS"
-  ssl_policy        = "ELBSecurityPolicy-TLS13-1-2-2021-06"
+  ssl_policy        = "ELBSecurityPolicy-TLS13-1-2-2023-10"
   certificate_arn   = var.controller_certificate_arn
 
   default_action {
@@ -454,7 +466,7 @@ resource "aws_lb_listener" "hub_https" {
   load_balancer_arn = aws_lb.hub.arn
   port              = 443
   protocol          = "HTTPS"
-  ssl_policy        = "ELBSecurityPolicy-TLS13-1-2-2021-06"
+  ssl_policy        = "ELBSecurityPolicy-TLS13-1-2-2023-10"
   certificate_arn   = var.hub_certificate_arn
 
   default_action {
