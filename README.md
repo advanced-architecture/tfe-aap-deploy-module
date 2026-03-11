@@ -309,6 +309,6 @@ cd ansible-automation-platform-setup-bundle-2.4.x-x/
 - **EBS volumes are encrypted at rest** on all EC2 instances and the RDS instance.
 - **RDS storage is encrypted** using the default AWS-managed KMS key. For stricter compliance, provide a customer-managed KMS key via the `kms_key_id` argument (not exposed as a variable in v1.0; add it for your use case).
 - **RDS deletion protection is enabled** by default. Set `db_deletion_protection = false` only for non-production environments.
-- **ALB TLS policy** uses `ELBSecurityPolicy-TLS13-1-2-2021-06`, which enforces TLS 1.2+ and supports TLS 1.3.
+- **ALB TLS policy** uses `ELBSecurityPolicy-TLS13-1-2-2023-10`, which enforces TLS 1.2+ and supports TLS 1.3.
 - **SSH access** on Controller and Hub nodes is allowed from `allowed_ingress_cidrs`. In production, restrict this to a bastion host CIDR or use **AWS Systems Manager Session Manager** (attach an IAM instance profile with `AmazonSSMManagedInstanceCore`).
 - **The `db_password` variable is marked `sensitive`** in Terraform to prevent it from appearing in plan/apply output. Store it in HCP Terraform as a sensitive variable or retrieve it from AWS Secrets Manager.
